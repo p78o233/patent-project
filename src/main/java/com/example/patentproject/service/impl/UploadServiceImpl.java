@@ -75,7 +75,7 @@ public class UploadServiceImpl implements UploadService {
                  * 判断单元格类型是否为文本类型
                  */
                 String title = row.getCell(1).getStringCellValue();
-                String abstract_title = row.getCell(2).getStringCellValue();
+                String abstract_title = row.getCell(2) == null ? "" : row.getCell(2).getStringCellValue();
                 String applicant = row.getCell(3).getStringCellValue();
                 String announce_num = row.getCell(4).getStringCellValue();
                 Date announce_date = row.getCell(5).getDateCellValue();
@@ -98,14 +98,17 @@ public class UploadServiceImpl implements UploadService {
                 }
                 String ipc_main_type = row.getCell(9).getStringCellValue();
                 String ipc = row.getCell(10).getStringCellValue();
-                String national_economic_classification = row.getCell(11).getStringCellValue();
+                String national_economic_classification = row.getCell(11) == null ?"": row.getCell(11).getStringCellValue();
                 String first_apply = row.getCell(12).getStringCellValue();
                 int num_of_apply = row.getCell(13).getCellType();
-                String apply_province = row.getCell(14).getStringCellValue();
-                String apply_city = row.getCell(15).getStringCellValue();
-                String apply_area = row.getCell(16).getStringCellValue();
-                String credit_code = row.getCell(17).getStringCellValue();
-                int reference_num = row.getCell(18).getStringCellValue().equals("") ? 0 : Integer.valueOf(row.getCell(18).getStringCellValue());
+                String apply_province = row.getCell(14) == null ?"":row.getCell(14).getStringCellValue();
+                String apply_city = row.getCell(15) == null?"":row.getCell(15).getStringCellValue();
+                String apply_area = row.getCell(16) == null? "" : row.getCell(16).getStringCellValue();
+                if(row.getCell(17) != null){
+                    row.getCell(17).setCellType(Cell.CELL_TYPE_STRING);
+                }
+                String credit_code = row.getCell(17) ==null ? "":row.getCell(17).getStringCellValue();
+                int reference_num = row.getCell(18) == null || row.getCell(18).getStringCellValue().equals("") ? 0 : Integer.valueOf(row.getCell(18).getStringCellValue());
                 String effectivenessStr = row.getCell(19).getStringCellValue();
                 int effectiveness = 0;
                 switch (effectivenessStr){
@@ -129,10 +132,14 @@ public class UploadServiceImpl implements UploadService {
                         legal_status = 3;
                         break;
                 }
-                row.getCell(21).setCellType(Cell.CELL_TYPE_STRING);
-                int transfer_num = row.getCell(21).getStringCellValue().equals("") ? 0 : Integer.valueOf(row.getCell(21).getStringCellValue());
-                row.getCell(22).setCellType(Cell.CELL_TYPE_STRING);
-                int license_num = row.getCell(22).getStringCellValue().equals("") ? 0 : Integer.valueOf(row.getCell(22).getStringCellValue());
+                if(row.getCell(21) != null){
+                    row.getCell(21).setCellType(Cell.CELL_TYPE_STRING);
+                }
+                int transfer_num = row.getCell(21) == null || row.getCell(21).getStringCellValue().equals("") ? 0 : Integer.valueOf(row.getCell(21).getStringCellValue());
+                if(row.getCell(22) != null){
+                    row.getCell(22).setCellType(Cell.CELL_TYPE_STRING);
+                }
+                int license_num = row.getCell(22) == null || row.getCell(22).getStringCellValue().equals("") ? 0 : Integer.valueOf(row.getCell(22).getStringCellValue());
 
                 baseData.setTitle(title);
                 baseData.setAbstract_title(abstract_title);

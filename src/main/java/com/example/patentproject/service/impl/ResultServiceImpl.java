@@ -1,5 +1,6 @@
 package com.example.patentproject.service.impl;
 
+import com.example.patentproject.entity.po.BaseData;
 import com.example.patentproject.entity.po.Cate;
 import com.example.patentproject.entity.vo.ResltExcelVo;
 import com.example.patentproject.mapper.ResultMapper;
@@ -65,7 +66,7 @@ public class ResultServiceImpl implements ResultService {
 //        根据cateid获取名字
         Cate cate = new Cate();
         cate = resultMapper.getCate(cateId);
-        downExcel("title", cate.getCate_num()+"-"+cate.getCate_name(), resultVos);
+        downExcel("title", String.valueOf(applyYear)+"年-"+cate.getCate_num()+"-"+cate.getCate_name(), resultVos);
     }
 
     public void downExcel(String excelTitle, String excelName, List<ResltExcelVo> resultVos) throws IOException{
@@ -295,13 +296,28 @@ public class ResultServiceImpl implements ResultService {
         List<ResltExcelVo> resultVos = new ArrayList<>();
 //        遍历根据公司名，关键字列表获取数据信息组装数据
         for (String company : companys) {
-            int inventionAuthorizationNum = resultMapper.getResult(keywords, company, applyYear, 2, 0);
-            int inventionApplicationValid = resultMapper.getResult(keywords, company, applyYear, 1, 2);
-            int inventionApplicationPending = resultMapper.getResult(keywords, company, applyYear, 1, 1);
-            int inventionApplicationPCT = 0;
-            int utilityModel = resultMapper.getResult(keywords, company, applyYear, 3, 0);
-            int shortTermPatent = 0;
-            int appearanceDesign = 0;
+            List<BaseData> baseDataList = new ArrayList<>();
+
+            float inventionAuthorizationNum = 0.0f;//resultMapper.getResult(keywords, company, applyYear, 2, 0);
+            baseDataList = resultMapper.getResultDetail(keywords, company, applyYear, 2, 0);
+            inventionAuthorizationNum = weightedStatistics(baseDataList,company);
+
+            float inventionApplicationValid = 0.0f;//resultMapper.getResult(keywords, company, applyYear, 1, 2);
+            baseDataList = resultMapper.getResultDetail(keywords, company, applyYear, 1, 2);
+            inventionApplicationValid = weightedStatistics(baseDataList,company);
+
+            float inventionApplicationPending = 0.0f;//resultMapper.getResult(keywords, company, applyYear, 1, 1);
+            baseDataList = resultMapper.getResultDetail(keywords, company, applyYear, 1, 1);
+            inventionApplicationPending = weightedStatistics(baseDataList,company);
+
+            float inventionApplicationPCT = 0.0f;
+
+            float utilityModel = 0.0f;//resultMapper.getResult(keywords, company, applyYear, 3, 0);
+            baseDataList = resultMapper.getResultDetail(keywords, company, applyYear, 3, 0);
+            utilityModel = weightedStatistics(baseDataList,company);
+
+            float shortTermPatent = 0.0f;
+            float appearanceDesign = 0.0f;
             int numberOfCitations = resultMapper.getReferenceNum(company, applyYear);
             int licensesNum = resultMapper.getLicenseNum(company, applyYear);
             int transfersNum = resultMapper.getTransferNum(company, applyYear);
@@ -311,5 +327,25 @@ public class ResultServiceImpl implements ResultService {
             resultVos.add(vo);
         }
         return resultVos;
+    }
+
+//    加权计算
+    float weightedStatistics(List<BaseData> baseDataList,String company){
+        float resultSum = 0.0f;
+        for(BaseData baseData : baseDataList){
+            String applicationStr = baseData.getApplicant();
+            String [] applicationArray = applicationStr.split(";");
+//                当前公司的值
+            int companyIndex = 0;
+            for(int i = applicationArray.length ; i > 0 ; i--){
+                if(applicationArray[i-1].equals(company)){
+                    companyIndex = i ;
+                    break;
+                }
+            }
+            float sum = ((applicationArray.length + 1)*applicationArray.length)/2;
+            resultSum = (companyIndex / sum) + resultSum;
+        }
+        return resultSum;
     }
 }

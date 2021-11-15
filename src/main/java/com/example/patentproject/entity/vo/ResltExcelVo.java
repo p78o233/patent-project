@@ -8,19 +8,19 @@ public class ResltExcelVo {
 //    公司名
     public String companyName;
 //    发明授权
-    public int inventionAuthorizationNum;
+    public float inventionAuthorizationNum;
 //    发明申请-有效
-    public int inventionApplicationValid;
+    public float inventionApplicationValid;
 //    发明申请-审中
-    public int inventionApplicationPending;
+    public float inventionApplicationPending;
 //    发明申请-PCT-有效期内
-    public int inventionApplicationPCT;
+    public float inventionApplicationPCT;
 //    实用新型
-    public int utilityModel;
+    public float utilityModel;
 //    短期专利
-    public int shortTermPatent;
+    public float shortTermPatent;
 //    外观设计
-    public int appearanceDesign;
+    public float appearanceDesign;
 //    被引证次数
     public int numberOfCitations;
 //    许可次数
@@ -56,59 +56,59 @@ public class ResltExcelVo {
         this.companyName = companyName;
     }
 
-    public int getInventionAuthorizationNum() {
+    public float getInventionAuthorizationNum() {
         return inventionAuthorizationNum;
     }
 
-    public void setInventionAuthorizationNum(int inventionAuthorizationNum) {
+    public void setInventionAuthorizationNum(float inventionAuthorizationNum) {
         this.inventionAuthorizationNum = inventionAuthorizationNum;
     }
 
-    public int getInventionApplicationValid() {
+    public float getInventionApplicationValid() {
         return inventionApplicationValid;
     }
 
-    public void setInventionApplicationValid(int inventionApplicationValid) {
+    public void setInventionApplicationValid(float inventionApplicationValid) {
         this.inventionApplicationValid = inventionApplicationValid;
     }
 
-    public int getInventionApplicationPending() {
+    public float getInventionApplicationPending() {
         return inventionApplicationPending;
     }
 
-    public void setInventionApplicationPending(int inventionApplicationPending) {
+    public void setInventionApplicationPending(float inventionApplicationPending) {
         this.inventionApplicationPending = inventionApplicationPending;
     }
 
-    public int getInventionApplicationPCT() {
+    public float getInventionApplicationPCT() {
         return inventionApplicationPCT;
     }
 
-    public void setInventionApplicationPCT(int inventionApplicationPCT) {
+    public void setInventionApplicationPCT(float inventionApplicationPCT) {
         this.inventionApplicationPCT = inventionApplicationPCT;
     }
 
-    public int getUtilityModel() {
+    public float getUtilityModel() {
         return utilityModel;
     }
 
-    public void setUtilityModel(int utilityModel) {
+    public void setUtilityModel(float utilityModel) {
         this.utilityModel = utilityModel;
     }
 
-    public int getShortTermPatent() {
+    public float getShortTermPatent() {
         return shortTermPatent;
     }
 
-    public void setShortTermPatent(int shortTermPatent) {
+    public void setShortTermPatent(float shortTermPatent) {
         this.shortTermPatent = shortTermPatent;
     }
 
-    public int getAppearanceDesign() {
+    public float getAppearanceDesign() {
         return appearanceDesign;
     }
 
-    public void setAppearanceDesign(int appearanceDesign) {
+    public void setAppearanceDesign(float appearanceDesign) {
         this.appearanceDesign = appearanceDesign;
     }
 
@@ -136,7 +136,7 @@ public class ResltExcelVo {
         this.transfersNum = transfersNum;
     }
 
-    public ResltExcelVo(String companyName, int inventionAuthorizationNum, int inventionApplicationValid, int inventionApplicationPending, int inventionApplicationPCT, int utilityModel, int shortTermPatent, int appearanceDesign, int numberOfCitations, int licensesNum, int transfersNum) {
+    public ResltExcelVo(String companyName, float inventionAuthorizationNum, float inventionApplicationValid, float inventionApplicationPending, float inventionApplicationPCT, float utilityModel, float shortTermPatent, float appearanceDesign, int numberOfCitations, int licensesNum, int transfersNum) {
         this.companyName = companyName;
         this.inventionAuthorizationNum = inventionAuthorizationNum;
         this.inventionApplicationValid = inventionApplicationValid;
